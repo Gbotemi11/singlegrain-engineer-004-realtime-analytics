@@ -1,0 +1,111 @@
+{
+  "generated_at": "2026-05-14T09:48:15.904267+00:00",
+  "inputs": {
+    "events_per_day": {
+      "value": 50000000,
+      "label": "brief-observed"
+    },
+    "avg_event_kb": {
+      "value": 1.5,
+      "label": "assumed"
+    },
+    "spike_multiplier": {
+      "value": 10,
+      "label": "brief-observed"
+    },
+    "month_days": {
+      "value": 30,
+      "label": "assumed"
+    }
+  },
+  "derived_load": {
+    "avg_events_per_second": {
+      "value": 578.7,
+      "label": "estimated"
+    },
+    "spike_events_per_second": {
+      "value": 5787.04,
+      "label": "estimated"
+    },
+    "avg_ingest_mb_per_second": {
+      "value": 0.85,
+      "label": "estimated"
+    },
+    "spike_ingest_mb_per_second": {
+      "value": 8.48,
+      "label": "estimated"
+    },
+    "monthly_raw_gb": {
+      "value": 2145.77,
+      "label": "estimated"
+    }
+  },
+  "kinesis_sizing": {
+    "records_per_sec_per_shard": {
+      "value": 1000,
+      "label": "benchmarked"
+    },
+    "mb_per_sec_per_shard": {
+      "value": 1,
+      "label": "benchmarked"
+    },
+    "shards_needed_by_records": {
+      "value": 6,
+      "label": "estimated"
+    },
+    "shards_needed_by_mb": {
+      "value": 9,
+      "label": "estimated"
+    },
+    "minimum_spike_shards": {
+      "value": 9,
+      "label": "estimated"
+    },
+    "recommended_launch_window_shards": {
+      "value": 14,
+      "label": "estimated"
+    },
+    "on_demand_default_records_per_second": {
+      "value": 4000,
+      "label": "benchmarked"
+    },
+    "on_demand_default_mb_per_second": {
+      "value": 4,
+      "label": "benchmarked"
+    },
+    "on_demand_default_is_enough_for_10x": {
+      "value": false,
+      "label": "estimated"
+    }
+  },
+  "clickhouse_insert_guardrail": {
+    "target_batch_rows": {
+      "value": 10000,
+      "label": "benchmarked"
+    },
+    "seconds_to_10k_rows_at_avg": {
+      "value": 17.28,
+      "label": "estimated"
+    },
+    "rows_per_5s_at_spike": {
+      "value": 28935.0,
+      "label": "estimated"
+    },
+    "note": "Use async inserts or buffering when average traffic produces small per-partition batches."
+  },
+  "budget_guardrail": {
+    "challenge_monthly_ceiling_usd": {
+      "value": 50000,
+      "label": "brief-observed"
+    },
+    "estimated_monthly_cost_low_usd": {
+      "value": 12000,
+      "label": "estimated"
+    },
+    "estimated_monthly_cost_high_usd": {
+      "value": 28000,
+      "label": "estimated"
+    },
+    "requires_aws_pricing_calculator_before_commit": true
+  }
+}

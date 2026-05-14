@@ -1,0 +1,19 @@
+flowchart LR
+  SDK[Legacy JavaScript SDK<br/>no breaking change] --> ALB[ALB / WAF]
+  ALB --> COL[ECS/Fargate Collector<br/>validate, auth, normalize, idempotency key]
+  COL -->|ack only after durable write| KDS[Kinesis Data Streams<br/>provisioned/warmed for launch peaks]
+  COL -->|partial failure spillover| SQS[SQS Spillover Queue<br/>redrive worker]
+  SQS --> KDS
+
+  KDS --> FLINK[Managed Service for Apache Flink<br/>windows, segment rules, identity events]
+  KDS --> FIREHOSE[Firehose]
+  FIREHOSE --> ICEBERG[S3 / Apache Iceberg raw+canonical event lake]
+
+  FLINK --> REDIS[ElastiCache Redis<br/>visitor state + segment membership]
+  FLINK --> CH[ClickHouse on AWS<br/>hot dashboard OLAP + materialized views]
+  FLINK --> DDB[DynamoDB<br/>identity graph + delete ledger]
+
+  CH --> API[Dashboard API]
+  REDIS --> PERS[Personalization API]
+  ICEBERG --> EXPORT[Warehouse exports<br/>Snowflake / BigQuery jobs]
+  DDB --> GDPR[Deletion workflow<br/>hot stores + Iceberg delete]
